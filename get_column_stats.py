@@ -1,19 +1,53 @@
-import sys, math
+import math
+import argparse
 
-file_name = sys.argv[1]
-col_num = int(sys.argv[2])
 
-f = open(file_name, 'r')
+def parse_inputs():
 
-V = []
+    parser = argparse.ArgumentParser(
+        description='Process input parameters for RJMC 2CLJQ')
 
-for l in f:
-    A = [int(x) for x in l.split()]
-    V.append(A[col_num])
+    parser.add_argument('--filename', '-f',
+                        type=str,
+                        help='Name of the file to include',
+                        required=True)
 
-mean = sum(V)/len(V)
+    parser.add_argument('--column', '-c',
+                        type=int,
+                        help='Column number to get stdev for',
+                        required=True)
+    args = parser.parse_args()
 
-stdev = math.sqrt(sum([(mean-x)**2 for x in V]) / len(V))
+    filename = args.filename
+    column = args.column
+    return filename, column
 
-print('mean:', mean)
-print('stdev:', stdev)
+
+def calculate_stdev(filename, column):
+
+    f = open(filename, 'r')
+
+    V = []
+
+    for l in f:
+        A = [int(x) for x in l.split()]
+        V.append(A[column])
+
+    mean = sum(V)/len(V)
+
+    stdev = math.sqrt(sum([(mean-x)**2 for x in V]) / len(V))
+
+    return mean, stdev
+
+
+def main():
+    filename, column = parse_inputs()
+
+    mean, stdev = calculate_stdev(filename, column)
+
+    print('mean:', mean)
+    print('stdev:', stdev)
+
+
+if __name__ == '__main__':
+    main()
