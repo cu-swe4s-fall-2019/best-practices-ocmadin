@@ -3,6 +3,19 @@ import argparse
 
 
 def parse_inputs():
+    """Parse the arguments for calculating stdev from a column of a text file
+
+    Parameters
+    ----------
+    None
+
+    Returns
+    -------
+    filename : str
+        Name of the file to be read
+    column : int
+        Column number of the file to compute stdev for
+    """
 
     parser = argparse.ArgumentParser(
         description='Process input parameters for RJMC 2CLJQ')
@@ -24,6 +37,22 @@ def parse_inputs():
 
 
 def calculate_stdev(filename, column):
+    """Calculate the stdev of a column in a file
+
+    Parameters
+    ----------
+    filename : str
+        Name of the file to be read
+    column : int
+        Column number of the file to compute stdev for
+
+    Returns
+    -------
+    mean : float
+        Mean of the column supplied
+    stdev : float
+        Stdev of the column supplied
+    """
 
     f = open(filename, 'r')
 
@@ -47,7 +76,7 @@ def main():
 
     print('mean:', mean)
     print('stdev:', stdev)
-
+`
 
 if __name__ == '__main__':
     main()
