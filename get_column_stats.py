@@ -76,7 +76,7 @@ def main():
 
     print('mean:', mean)
     print('stdev:', stdev)
-`
+
 
 if __name__ == '__main__':
     main()
