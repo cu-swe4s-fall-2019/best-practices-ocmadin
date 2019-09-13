@@ -2,16 +2,20 @@ import sys
 import os
 
 
-def one(): print('one')
+def one():
+    print('one')
 
 
-def two(): print('two')
+def two():
+    print('two')
 
 
-def three(): print('three')
+def three():
+    print('three')
 
 
-def four(): print('four')
+def four():
+    print('four')
 
 
 def five(a, b, c, d, e): print(a, b, c, d, e)
