@@ -88,6 +88,19 @@ def calculate_stdev(number_list):
     stdev : float
         Stdev of the column supplied
     """
+    
+    if not isinstance(number_list,list): 
+        raise TypeError('calculate_mean requires list as input')
+    
+    
+    for i in number_list:
+        if i is None:
+            raise IndexError('Empty Value in list')
+        elif not isinstance(i, (int,float,complex)): 
+            raise TypeError('Invalid list component')
+            
+    if len(number_list) == 0:
+        raise IndexError('List is Empty')
 
     mean = sum(number_list)/len(number_list)
 
