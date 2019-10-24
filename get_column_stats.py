@@ -33,6 +33,13 @@ def parse_inputs():
 
     filename = args.filename
     column = args.column
+    f = open(filename, 'r')
+
+    V = []
+
+    for l in f:
+        A = [int(x) for x in l.split()]
+        V.append(A[column])
     return filename, column
 
 
@@ -43,18 +50,31 @@ def calculate_mean(number_list):
     ----------
 
     number_list : list
-	list of the numbers to compute the mean of
+        list of the numbers to compute the mean of
 
     Returns
     -------
     mean : float
-	mean of the column chosen
+        mean of the column chosen
     """
 
+    if not isinstance(number_list,list): 
+        raise TypeError('calculate_mean requires list as input')
     
+    
+    for i in number_list:
+        if i is None:
+            raise IndexError('Empty Value in list')
+        elif not isinstance(i, (int,float,complex)): 
+            raise TypeError('Invalid list component')
+            
+    if len(number_list) == 0:
+        raise IndexError('List is Empty')
+
     mean = sum(number_list)/len(number_list)
 
     return mean
+
 
 def calculate_stdev(number_list):
     """Calculate the stdev of a column in a file
@@ -62,7 +82,7 @@ def calculate_stdev(number_list):
     Parameters
     ----------
     number_list : list
-	list of the number to compute stdev for
+        list of the number to compute stdev for
     Returns
     -------
     stdev : float
@@ -71,7 +91,8 @@ def calculate_stdev(number_list):
 
     mean = sum(number_list)/len(number_list)
 
-    stdev = math.sqrt(sum([(mean-x)**2 for x in number_list]) / len(number_list))
+    stdev = math.sqrt(
+        sum([(mean-x)**2 for x in number_list]) / len(number_list))
 
     return stdev
 
