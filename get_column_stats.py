@@ -36,37 +36,44 @@ def parse_inputs():
     return filename, column
 
 
-def calculate_stdev(filename, column):
-    """Calculate the stdev of a column in a file
+def calculate_mean(number_list):
+    """Calculate the mean of a column in a file
 
     Parameters
     ----------
-    filename : str
-        Name of the file to be read
-    column : int
-        Column number of the file to compute stdev for
+
+    number_list : list
+	list of the numbers to compute the mean of
 
     Returns
     -------
     mean : float
-        Mean of the column supplied
+	mean of the column chosen
+    """
+
+    
+    mean = sum(number_list)/len(number_list)
+
+    return mean
+
+def calculate_stdev(number_list):
+    """Calculate the stdev of a column in a file
+
+    Parameters
+    ----------
+    number_list : list
+	list of the number to compute stdev for
+    Returns
+    -------
     stdev : float
         Stdev of the column supplied
     """
 
-    f = open(filename, 'r')
+    mean = sum(number_list)/len(number_list)
 
-    V = []
+    stdev = math.sqrt(sum([(mean-x)**2 for x in number_list]) / len(number_list))
 
-    for l in f:
-        A = [int(x) for x in l.split()]
-        V.append(A[column])
-
-    mean = sum(V)/len(V)
-
-    stdev = math.sqrt(sum([(mean-x)**2 for x in V]) / len(V))
-
-    return mean, stdev
+    return stdev
 
 
 def main():
@@ -76,7 +83,7 @@ def main():
 
     print('mean:', mean)
     print('stdev:', stdev)
-`
+
 
 if __name__ == '__main__':
     main()
