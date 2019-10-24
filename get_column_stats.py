@@ -33,27 +33,6 @@ def parse_inputs():
 
     filename = args.filename
     column = args.column
-    return filename, column
-
-
-def calculate_stdev(filename, column):
-    """Calculate the stdev of a column in a file
-
-    Parameters
-    ----------
-    filename : str
-        Name of the file to be read
-    column : int
-        Column number of the file to compute stdev for
-
-    Returns
-    -------
-    mean : float
-        Mean of the column supplied
-    stdev : float
-        Stdev of the column supplied
-    """
-
     f = open(filename, 'r')
 
     V = []
@@ -61,12 +40,61 @@ def calculate_stdev(filename, column):
     for l in f:
         A = [int(x) for x in l.split()]
         V.append(A[column])
+    return filename, column
 
-    mean = sum(V)/len(V)
 
-    stdev = math.sqrt(sum([(mean-x)**2 for x in V]) / len(V))
+def calculate_mean(number_list):
+    """Calculate the mean of a column in a file
 
-    return mean, stdev
+    Parameters
+    ----------
+
+    number_list : list
+        list of the numbers to compute the mean of
+
+    Returns
+    -------
+    mean : float
+        mean of the column chosen
+    """
+
+    if not isinstance(number_list,list): 
+        raise TypeError('calculate_mean requires list as input')
+    
+    
+    for i in number_list:
+        if i is None:
+            raise IndexError('Empty Value in list')
+        elif not isinstance(i, (int,float,complex)): 
+            raise TypeError('Invalid list component')
+            
+    if len(number_list) == 0:
+        raise IndexError('List is Empty')
+
+    mean = sum(number_list)/len(number_list)
+
+    return mean
+
+
+def calculate_stdev(number_list):
+    """Calculate the stdev of a column in a file
+
+    Parameters
+    ----------
+    number_list : list
+        list of the number to compute stdev for
+    Returns
+    -------
+    stdev : float
+        Stdev of the column supplied
+    """
+
+    mean = sum(number_list)/len(number_list)
+
+    stdev = math.sqrt(
+        sum([(mean-x)**2 for x in number_list]) / len(number_list))
+
+    return stdev
 
 
 def main():
@@ -76,7 +104,7 @@ def main():
 
     print('mean:', mean)
     print('stdev:', stdev)
-`
+
 
 if __name__ == '__main__':
     main()
