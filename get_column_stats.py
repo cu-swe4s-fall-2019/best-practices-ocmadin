@@ -1,5 +1,6 @@
 import math
 import argparse
+import os
 
 
 def parse_inputs():
@@ -32,7 +33,12 @@ def parse_inputs():
     args = parser.parse_args()
 
     filename = args.filename
+    print(filename)
     column = args.column
+
+    if os.path.isfile(filename) is False:
+        raise ValueError
+
     f = open(filename, 'r')
 
     V = []
@@ -40,7 +46,7 @@ def parse_inputs():
     for l in f:
         A = [int(x) for x in l.split()]
         V.append(A[column])
-    return filename, column
+    return V
 
 
 def calculate_mean(number_list):
@@ -58,16 +64,15 @@ def calculate_mean(number_list):
         mean of the column chosen
     """
 
-    if not isinstance(number_list,list): 
+    if not isinstance(number_list, list):
         raise TypeError('calculate_mean requires list as input')
-    
-    
+
     for i in number_list:
         if i is None:
             raise IndexError('Empty Value in list')
-        elif not isinstance(i, (int,float,complex)): 
+        elif not isinstance(i, (int, float, complex)):
             raise TypeError('Invalid list component')
-            
+
     if len(number_list) == 0:
         raise IndexError('List is Empty')
 
@@ -88,17 +93,16 @@ def calculate_stdev(number_list):
     stdev : float
         Stdev of the column supplied
     """
-    
-    if not isinstance(number_list,list): 
+
+    if not isinstance(number_list, list):
         raise TypeError('calculate_mean requires list as input')
-    
-    
+
     for i in number_list:
         if i is None:
             raise IndexError('Empty Value in list')
-        elif not isinstance(i, (int,float,complex)): 
+        elif not isinstance(i, (int, float, complex)):
             raise TypeError('Invalid list component')
-            
+
     if len(number_list) == 0:
         raise IndexError('List is Empty')
 
@@ -111,9 +115,13 @@ def calculate_stdev(number_list):
 
 
 def main():
-    filename, column = parse_inputs()
+    try:
+        number_list = parse_inputs()
+    except ValueError:
+        print('Failure: Bad inputs')
 
-    mean, stdev = calculate_stdev(filename, column)
+    mean = calculate_mean(number_list)
+    stdev = calculate_stdev(number_list)
 
     print('mean:', mean)
     print('stdev:', stdev)

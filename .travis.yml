@@ -12,4 +12,5 @@ before_install:
     - conda install --yes python=3.6
       
 script:
+    - python -m unittest basics_test.py
     - bash basics_test.sh
