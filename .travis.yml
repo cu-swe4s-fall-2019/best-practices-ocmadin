@@ -15,3 +15,4 @@ before_install:
 script:
     - python -m unittest basics_test.py
     - bash basics_test.sh
+    - pycodestyle get_column_stats.py
